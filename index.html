@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>شبکه‌های اجتماعی من</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Vazirmatn', 'Tahoma', sans-serif; }
+
+  body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    background-attachment: fixed;
+    color: #fff;
+    padding: 40px 20px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(139,92,246,0.4), transparent 70%);
+    top: -200px; right: -200px;
+    border-radius: 50%;
+    animation: float 8s ease-in-out infinite;
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(236,72,153,0.3), transparent 70%);
+    bottom: -150px; left: -150px;
+    border-radius: 50%;
+    animation: float 10s ease-in-out infinite reverse;
+    z-index: 0;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(30px, 30px); }
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 50px;
+    animation: fadeInDown 0.8s ease;
+  }
+
+  .avatar {
+    width: 130px;
+    height: 130px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #8b5cf6, #ec4899, #f59e0b);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 55px;
+    color: #fff;
+    box-shadow: 0 0 40px rgba(139, 92, 246, 0.6), 0 0 80px rgba(236, 72, 153, 0.3);
+    border: 4px solid rgba(255,255,255,0.15);
+    animation: pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 40px rgba(139, 92, 246, 0.6), 0 0 80px rgba(236, 72, 153, 0.3); }
+    50% { box-shadow: 0 0 60px rgba(139, 92, 246, 0.9), 0 0 100px rgba(236, 72, 153, 0.5); }
+  }
+
+  header h1 {
+    font-size: 2.2rem;
+    background: linear-gradient(90deg, #a78bfa, #f472b6, #fbbf24);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+  }
+
+  header p {
+    color: #cbd5e1;
+    font-size: 1.05rem;
+    line-height: 1.8;
+  }
+
+  .badge {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 8px 22px;
+    background: rgba(139, 92, 246, 0.15);
+    border: 1px solid rgba(139, 92, 246, 0.4);
+    border-radius: 50px;
+    font-size: 0.9rem;
+    color: #a78bfa;
+  }
+
+  section {
+    margin-bottom: 45px;
+    animation: fadeInUp 0.8s ease both;
+  }
+
+  section:nth-child(2) { animation-delay: 0.1s; }
+  section:nth-child(3) { animation-delay: 0.2s; }
+  section:nth-child(4) { animation-delay: 0.3s; }
+  section:nth-child(5) { animation-delay: 0.4s; }
+
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.4rem;
+    margin-bottom: 8px;
+    padding-right: 15px;
+    border-right: 4px solid;
+    border-image: linear-gradient(180deg, #8b5cf6, #ec4899) 1;
+  }
+
+  .section-title .icon { font-size: 1.6rem; }
+
+  .section-subtitle {
+    font-size: 0.88rem;
+    color: #94a3b8;
+    margin-bottom: 20px;
+    padding-right: 19px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-subtitle::before {
+    content: '👤';
+    font-size: 0.9rem;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 18px;
+  }
+
+  .card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 18px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, var(--c1), var(--c2));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+  }
+
+  .card:hover {
+    transform: translateY(-6px) scale(1.02);
+    border-color: var(--c1);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.4), 0 0 30px var(--c1);
+  }
+
+  .card:hover::before { opacity: 0.12; }
+
+  .card-icon {
+    width: 55px;
+    height: 55px;
+    min-width: 55px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.7rem;
+    background: var(--gradient);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  }
+
+  .card-info { flex: 1; overflow: hidden; }
+
+  .card-info h3 {
+    font-size: 1.1rem;
+    margin-bottom: 6px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .card-info h3 .fa-name { color: #fff; }
+
+  .card-info h3 .en-name {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    font-family: 'Courier New', monospace;
+    direction: ltr;
+    font-weight: 500;
+  }
+
+  .card-info p {
+    font-size: 1rem;
+    color: #e2e8f0;
+    font-family: 'Courier New', monospace;
+    direction: ltr;
+    text-align: right;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 60px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    color: #64748b;
+    font-size: 0.95rem;
+    line-height: 2;
+  }
+
+  footer span {
+    background: linear-gradient(90deg, #a78bfa, #f472b6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: bold;
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: linear-gradient(135deg, #8b5cf6, #ec4899);
+    color: #fff;
+    padding: 14px 28px;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    box-shadow: 0 10px 40px rgba(139, 92, 246, 0.5);
+    opacity: 0;
+    transition: all 0.4s ease;
+    z-index: 1000;
+  }
+
+  .toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 500px) {
+    header h1 { font-size: 1.7rem; }
+    .avatar { width: 100px; height: 100px; font-size: 42px; }
+    .section-title { font-size: 1.2rem; }
+    .section-subtitle { font-size: 0.8rem; }
+    .grid { grid-template-columns: 1fr; }
+    body { padding: 25px 15px; }
+    .card-info p { font-size: 0.95rem; }
+    .card-info h3 { font-size: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <header>
+    <div class="avatar">🌐</div>
+    <h1>راه‌های ارتباطی</h1>
+    <p>همه‌ی شبکه‌های اجتماعی من، یکجا</p>
+    <div class="badge">✦ ما در تمامی شبکه‌های اجتماعی حضور داریم ✦</div>
+  </header>
+
+  <!-- اپلیکیشن‌های ایرانی -->
+  <section>
+    <h2 class="section-title"><span class="icon">🇮🇷</span> پیام‌رسان‌های ایرانی</h2>
+    <p class="section-subtitle">آیدی ما در زیر اسم شبکه‌های اجتماعی نوشته شده است</p>
+    <div class="grid">
+
+      <a class="card" style="--c1:#7c3aed; --c2:#a855f7; --gradient:linear-gradient(135deg,#7c3aed,#a855f7);"
+         onclick="copyText('mohammadhagi1392', event)">
+        <div class="card-icon">💬</div>
+        <div class="card-info">
+          <h3><span class="fa-name">روبیکا</span> <span class="en-name">Rubika</span></h3>
+          <p>mohammadhagi1392</p>
+        </div>
+      </a>
+
+      <a class="card" style="--c1:#06b6d4; --c2:#3b82f6; --gradient:linear-gradient(135deg,#06b6d4,#3b82f6);"
+         onclick="copyText('mohammadhagi1392', event)">
+        <div class="card-icon">📩</div>
+        <div class="card-info">
+          <h3><span class="fa-name">بله</span> <span class="en-name">Bale</span></h3>
+          <p>mohammadhagi1392</p>
+        </div>
+      </a>
+
+      <a class="card" style="--c1:#f97316; --c2:#ef4444; --gradient:linear-gradient(135deg,#f97316,#ef4444);"
+         onclick="copyText('mohammadhagi1392', event)">
+        <div class="card-icon">✉️</div>
+        <div class="card-info">
+          <h3><span class="fa-name">ایتا</span> <span class="en-name">Eitaa</span></h3>
+          <p>mohammadhagi1392</p>
+        </div>
+      </a>
+
+      <a class="card" style="--c1:#22c55e; --c2:#10b981; --gradient:linear-gradient(135deg,#22c55e,#10b981);"
+         onclick="copyText('mohammadhagi1392', event)">
+        <div class="card-icon">🟢</div>
+        <div class="card-info">
+          <h3><span class="fa-name">سروش</span> <span class="en-name">Soroush</span></h3>
+          <p>mohammadhagi1392</p>
+        </div>
+      </a>
+
+      <a class="card" style="--c1:#00a693; --c2:#007a6b; --gradient:linear-gradient(135deg,#00c9a7,#00a693);"
+         onclick="copyText('mohammadhagi1392', event)">
+        <div class="card-icon">🎓</div>
+        <div class="card-info">
+          <h3><span class="fa-name">شاد</span> <span class="en-name">Shad</span></h3>
+          <p>mohammadhagi1392</p>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- شبکه‌های جهانی -->
+  <section>
+    <h2 class="section-title"><span class="icon">🌍</span> شبکه‌های جهانی</h2>
+    <p class="section-subtitle">آیدی ما در زیر اسم شبکه‌های اجتماعی نوشته شده است</p>
+    <div class="grid">
+
+      <a class="card" style="--c1:#25d366; --c2:#128c7e; --gradient:linear-gradient(135deg,#25d366,#128c7e);"
+         onclick="copyText('mohammadhagi1392', event)">
+        <div class="card-icon">💚</div>
+        <div class="card-info">
+          <h3><span class="fa-name">واتساپ</span> <span class="en-name">WhatsApp</span></h3>
+          <p>mohammadhagi1392</p>
+        </div>
+      </a>
+
+      <a class="card" style="--c1:#e1306c; --c2:#962fbf; --gradient:linear-gradient(135deg,#feda75,#d62976,#962fbf);"
+         onclick="copyText('mohammadhagi1392', event)">
+        <div class="card-icon">📸</div>
+        <div class="card-info">
+          <h3><span class="fa-name">اینستاگرام</span> <span class="en-name">Instagram</span></h3>
+          <p>mohammadhagi1392</p>
+        </div>
+      </a>
+
+      <a class="card" style="--c1:#1877f2; --c2:#0e5cd1; --gradient:linear-gradient(135deg,#1877f2,#0e5cd1);"
+         onclick="copyText('mohammadhagi1392', event)">
+        <div class="card-icon">📘</div>
+        <div class="card-info">
+          <h3><span class="fa-name">فیسبوک</span> <span class="en-name">Facebook</span></h3>
+          <p>mohammadhagi1392</p>
+        </div>
+      </a>
+
+      <a class="card" style="--c1:#000000; --c2:#333333; --gradient:linear-gradient(135deg,#1a1a1a,#000000);"
+         onclick="copyText('mohammadhagi1392', event)">
+        <div class="card-icon">𝕏</div>
+        <div class="card-info">
+          <h3><span class="fa-name">ایکس</span> <span class="en-name">X (Twitter)</span></h3>
+          <p>mohammadhagi1392</p>
+        </div>
+      </a>
+
+      <a class="card" style="--c1:#5865f2; --c2:#4752c4; --gradient:linear-gradient(135deg,#5865f2,#4752c4);"
+         onclick="copyText('mohammadhagi1392', event)">
+        <div class="card-icon">🎮</div>
+        <div class="card-info">
+          <h3><span class="fa-name">دیسکورد</span> <span class="en-name">Discord</span></h3>
+          <p>mohammadhagi1392</p>
+        </div>
+      </a>
+
+      <a class="card" style="--c1:#0088cc; --c2:#006699; --gradient:linear-gradient(135deg,#29b6f6,#0088cc);"
+         onclick="copyText('mohammadhagi1392', event)">
+        <div class="card-icon">✈️</div>
+        <div class="card-info">
+          <h3><span class="fa-name">تلگرام</span> <span class="en-name">Telegram</span></h3>
+          <p>mohammadhagi1392</p>
+        </div>
+      </a>
+
+      <a class="card" style="--c1:#ff4500; --c2:#ff5714; --gradient:linear-gradient(135deg,#ff4500,#ff7043);"
+         onclick="copyText('mohammadhagi1392', event)">
+        <div class="card-icon">👽</div>
+        <div class="card-info">
+          <h3><span class="fa-name">ردیت</span> <span class="en-name">Reddit</span></h3>
+          <p>mohammadhagi1392</p>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ایمیل -->
+  <section>
+    <h2 class="section-title"><span class="icon">📧</span> ایمیل</h2>
+    <p class="section-subtitle">آیدی ما در زیر اسم شبکه‌های اجتماعی نوشته شده است</p>
+    <div class="grid">
+      <a class="card" style="--c1:#ea4335; --c2:#c5221f; --gradient:linear-gradient(135deg,#ea4335,#c5221f);"
+         onclick="copyText('mohammadhagi1392@gmail.com', event)">
+        <div class="card-icon">📨</div>
+        <div class="card-info">
+          <h3><span class="fa-name">جیمیل</span> <span class="en-name">Gmail</span></h3>
+          <p>mohammadhagi1392@gmail.com</p>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- میهن کرافت -->
+  <section>
+    <h2 class="section-title"><span class="icon">⛏️</span> میهن کرافت</h2>
+    <p class="section-subtitle">آیدی ما در زیر اسم شبکه‌های اجتماعی نوشته شده است</p>
+    <div class="grid">
+      <a class="card" style="--c1:#84cc16; --c2:#65a30d; --gradient:linear-gradient(135deg,#84cc16,#65a30d);"
+         onclick="copyText('mohammad36', event)">
+        <div class="card-icon">🟩</div>
+        <div class="card-info">
+          <h3><span class="fa-name">میهن کرافت</span> <span class="en-name">MihanCraft</span></h3>
+          <p>mohammad36</p>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    برای کپی کردن هر آیدی، روی کارت مربوطه کلیک کنید ✨<br>
+    ساخته شده توسط <span>محمد</span>
+  </footer>
+
+</div>
+
+<div class="toast" id="toast">✅ کپی شد!</div>
+
+<script>
+  function copyText(text, event) {
+    event.preventDefault();
+    navigator.clipboard.writeText(text).then(() => {
+      showToast('✅ کپی شد: ' + text);
+    }).catch(() => {
+      const input = document.createElement('input');
+      input.value = text;
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand('copy');
+      document.body.removeChild(input);
+      showToast('✅ کپی شد: ' + text);
+    });
+  }
+
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(window._toastTimer);
+    window._toastTimer = setTimeout(() => {
+      toast.classList.remove('show');
+    }, 1800);
+  }
+</script>
+
+</body>
+</html>
